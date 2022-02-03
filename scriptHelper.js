@@ -121,8 +121,9 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel) {
         }
     }
     if(valid === false){
+        let w = window;
         if(msg){
-            window.alert(msg);
+            w.alert(msg);
         }
         showFaultyItems(doc);
         updateStatus(doc,"Shuttle not ready for launch");
