@@ -1,7 +1,7 @@
 const { myFetch } = require("./scriptHelper.js");
 
 window.addEventListener("load", function() {
-
+    var w = window;
    let listedPlanets;
    let listedPlanetsResponse = myFetch();
    listedPlanetsResponse.then(function (result) {
