@@ -25,4 +25,5 @@ window.addEventListener("load", function() {
         }
         event.preventDefault();
    });
+   document.querySelector('#faultyItems').style.visibility = 'hidden';
 });
