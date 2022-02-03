@@ -1,4 +1,4 @@
-// const { myFetch } = require("./scriptHelper.js");
+const { myFetch } = require("./scriptHelper.js");
 
 window.addEventListener("load", function() {
 
