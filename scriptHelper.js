@@ -23,7 +23,7 @@ function validateInput(testInput) {
    }
    return "Empty";
 }
-function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel) {
+function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel,w) {
     hideFaultyItems(doc);
     let valid = true;
     let msg = '';

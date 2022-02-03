@@ -1,7 +1,6 @@
 const { myFetch } = require("./scriptHelper.js");
 
 window.addEventListener("load", function() {
-    var w = window;
    let listedPlanets;
    let listedPlanetsResponse = myFetch();
    listedPlanetsResponse.then(function (result) {
@@ -13,13 +12,14 @@ window.addEventListener("load", function() {
    
    let form = document.querySelector('form');
    form.addEventListener('submit',function(event){
+        let w = window;
         let doc = document;
         let list;
         let pilot = doc.querySelector('#pilotName').value;
         let coPilot = doc.querySelector('input[name=copilotName]').value;
         let fuelLevel = doc.querySelector('input[name=fuelLevel]').value;
         let cargoMass = doc.querySelector('input[name=cargoMass]').value;
-        let valid = formSubmission(doc,list,pilot,coPilot,fuelLevel,cargoMass);
+        let valid = formSubmission(doc,list,pilot,coPilot,fuelLevel,cargoMass,w);
         if(!valid){
             event.preventDefault();
         }
