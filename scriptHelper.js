@@ -163,7 +163,7 @@ function showFaultyItems(doc){
     doc.querySelector('#faultyItems').style.visibility = 'visible';
 }
 function hideFaultyItems(doc){
-    doc.querySelector('#faultyItems').style.visibility = 'hidden';
+    doc.querySelector('#faultyItems').style.visibility = '';
 }
 async function myFetch() {
     let planetsReturned = await fetch('https://handlers.education.launchcode.org/static/planets.json').then(response => response.json()).then(function(data) {
