@@ -1,5 +1,5 @@
 require('isomorphic-fetch');
-
+let alert = require('alert');
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
     let target = document.querySelector('#missionTarget');
     target.innerHTML = `
