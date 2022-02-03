@@ -32,7 +32,7 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel) {
             case 2:
                 switch (result){
                     case ('Not a Number'):
-                        updatePilotStatus(doc,`Pilot: ${arguments[a]}`,': Ready');
+                        updatePilotStatus(doc,`Pilot ${arguments[a]} is ready for launch`);
                     break;
                     case ('Is a Number'):
                         valid = false;
@@ -51,7 +51,7 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel) {
             case 3:
                 switch (result){
                     case ('Not a Number'):
-                        updateCopilotStatus(doc,`Co-Pilot: ${arguments[a]}`,`: Ready`);
+                        updateCopilotStatus(doc,`Co-pilot ${arguments[a]} is ready for launch`);
                     break;
                     case ('Is a Number'):
                         valid = false;
@@ -80,7 +80,7 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel) {
                             msg += 'Insufficient fuel for this journey.\n';
                             updateFuelStatus(doc,'Insufficient fuel for this journey:  Not Ready');
                         } else {
-                            updateFuelStatus(doc,'Fuel: Ready');
+                            updateFuelStatus(doc,'Fuel level high enough for launch');
                         }
                     break;
                     case ('Empty'):
@@ -105,7 +105,7 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel) {
                             msg += 'Cargo Mass exceeds shuttle capacity.\n'
                             updateCargoStatus(doc,'Cargo Mass exceeds shuttle capacity:  Not Ready');
                         } else {
-                            updateCargoStatus(doc,'Cargo: Ready');
+                            updateCargoStatus(doc,'Cargo mass low enough for launch');
                         }
                     break;
                     case ('Empty'):
@@ -127,7 +127,7 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel) {
         updateStatus(doc,"Shuttle not ready for launch");
     } else {
         hideFaultyItems(doc);
-        updateStatus(doc,"Shuttle is ready for launch");
+        updateStatus(doc,"Shuttle is Ready for launch");
     }
     return valid;
 }
@@ -136,7 +136,7 @@ function updateStatus(doc,status){
     statusReport.innerHTML = status;
     switch(status){
         case ("Shuttle is ready for launch"):
-            statusReport.style.color = 'green';
+            statusReport.style.color = 'rgb(65, 159, 106)';
         break;
         default:
             statusReport.style.color = 'red';
