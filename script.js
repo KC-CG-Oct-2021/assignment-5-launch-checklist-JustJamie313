@@ -12,7 +12,7 @@ window.addEventListener("load", function() {
    
    let form = document.querySelector('form');
    form.addEventListener('submit',function(event){
-        let w = window;
+        let w = this.window;
         let doc = document;
         let list;
         let pilot = doc.querySelector('#pilotName').value;
