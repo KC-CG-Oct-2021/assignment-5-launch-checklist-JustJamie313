@@ -1,7 +1,7 @@
-const { myFetch } = require("./scriptHelper.js");
+// const { myFetch } = require("./scriptHelper.js");
 
 window.addEventListener("load", function(e) {
-    let w = e.target;
+    
     let listedPlanets;
     let listedPlanetsResponse = myFetch();
     listedPlanetsResponse.then(function (result) {
@@ -12,9 +12,9 @@ window.addEventListener("load", function(e) {
     })
    
    let form = document.querySelector('form');
-   form.addEventListener('submit',function(event,w){
-        
+   form.addEventListener('submit',function(event){
         let doc = document;
+        let w = doc.defaultView || doc.parentWindow;
         let list;
         let pilot = doc.querySelector('#pilotName').value;
         let coPilot = doc.querySelector('input[name=copilotName]').value;

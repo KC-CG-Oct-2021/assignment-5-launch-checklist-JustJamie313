@@ -120,6 +120,7 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel,w) {
             break;
         }
     }
+    console.log(w);
     if(valid === false){
         if(msg){
             w.alert(msg);
@@ -139,7 +140,7 @@ function updateStatus(doc,status){
             statusReport.style.color = 'rgb(65, 159, 106)';
         break;
         default:
-            statusReport.style.color = 'rgb(65, 159, 106)';
+            statusReport.style.color = 'rgb(199, 37, 78)';
     }
 }
 function updatePilotStatus(doc,pilot,status){
