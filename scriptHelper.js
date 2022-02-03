@@ -1,5 +1,4 @@
 require('isomorphic-fetch');
-const window = window;
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
     let target = document.querySelector('#missionTarget');
     target.innerHTML = `
@@ -123,7 +122,11 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel) {
     }
     if(valid === false){
         if(msg){
-            window.alert(msg);
+            if(window){
+                window.alert(msg);
+            } else {
+                console.log(msg);
+            }
         }
         updateStatus(doc,"Shuttle not ready for launch");
     } else {
