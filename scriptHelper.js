@@ -120,10 +120,13 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel,w) {
             break;
         }
     }
-    console.log(w);
     if(valid === false){
         if(msg){
-            w.alert(msg);
+            if(w){
+                w.alert(msg);
+            } else {
+                console.log(w);
+            }
         }
         updateStatus(doc,"Shuttle not ready for launch");
     } else {
