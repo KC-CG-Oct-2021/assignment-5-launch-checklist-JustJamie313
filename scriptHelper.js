@@ -24,7 +24,7 @@ function validateInput(testInput) {
    return "Empty";
 }
 function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel) {
-    let w = window;
+    let window = window;
     hideFaultyItems(doc);
     let valid = true;
     let msg = '';
@@ -123,7 +123,7 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel) {
     }
     if(valid === false){
         if(msg){
-            w.alert(msg);
+            window.alert(msg);
         }
         updateStatus(doc,"Shuttle not ready for launch");
     } else {
