@@ -24,6 +24,7 @@ function validateInput(testInput) {
    return "Empty";
 }
 function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel) {
+    hideFaultyItems(doc);
     let valid = true;
     let msg = '';
     for(let a=2;a<arguments.length;a++){
@@ -32,7 +33,7 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel) {
             case 2:
                 switch (result){
                     case ('Not a Number'):
-                        updatePilotStatus(doc,`Pilot ${arguments[a]}`,` is ready for launch`);
+                        updatePilotStatus(doc,`Pilot ${arguments[a]}`,`is ready for launch`);
                     break;
                     case ('Is a Number'):
                         valid = false;
@@ -51,7 +52,7 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel) {
             case 3:
                 switch (result){
                     case ('Not a Number'):
-                        updateCopilotStatus(doc,`Co-pilot ${arguments[a]}`,` is ready for launch`);
+                        updateCopilotStatus(doc,`Co-pilot ${arguments[a]}`,`is ready for launch`);
                     break;
                     case ('Is a Number'):
                         valid = false;
@@ -123,12 +124,11 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel) {
         if(msg){
             window.alert(msg);
         }
-        showFaultyItems(doc);
         updateStatus(doc,"Shuttle not ready for launch");
     } else {
-        hideFaultyItems(doc);
         updateStatus(doc,"Shuttle is Ready for Launch");
     }
+    showFaultyItems(doc);
     return valid;
 }
 function updateStatus(doc,status){
