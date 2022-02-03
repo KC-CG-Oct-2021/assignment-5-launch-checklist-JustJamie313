@@ -136,7 +136,7 @@ function updateStatus(doc,status){
     let statusReport = doc.querySelector('#launchStatus');
     statusReport.innerHTML = status;
     switch(status){
-        case ("Shuttle is ready for launch"):
+        case ("Shuttle is Ready for Launch"):
             statusReport.style.color = 'rgb(65, 159, 106)';
         break;
         default:

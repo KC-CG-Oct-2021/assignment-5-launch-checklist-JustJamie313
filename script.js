@@ -1,4 +1,4 @@
-// const { myFetch } = require("./scriptHelper.js");
+const { myFetch } = require("./scriptHelper.js");
 
 window.addEventListener("load", function(e) {
     
@@ -15,6 +15,7 @@ window.addEventListener("load", function(e) {
    form.addEventListener('submit',function(event){
         let doc = document;
         let w = doc.defaultView || doc.parentWindow;
+        w.name = 'launchReport';
         let list;
         let pilot = doc.querySelector('#pilotName').value;
         let coPilot = doc.querySelector('input[name=copilotName]').value;
