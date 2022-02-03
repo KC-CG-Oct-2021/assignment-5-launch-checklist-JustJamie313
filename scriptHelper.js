@@ -79,7 +79,7 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel,w) {
                         if(arguments[a]<10000){
                             valid = false;
                             msg += 'Insufficient fuel for this journey.\n';
-                            updateFuelStatus(doc,'Insufficient fuel for this journey:  Not Ready');
+                            updateFuelStatus(doc,'Fuel level too low for launch');
                         } else {
                             updateFuelStatus(doc,'Fuel level high enough for launch');
                         }
@@ -104,7 +104,7 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel,w) {
                         if(arguments[a]>10000){
                             valid = false;
                             msg += 'Cargo Mass exceeds shuttle capacity.\n'
-                            updateCargoStatus(doc,'Cargo Mass exceeds shuttle capacity:  Not Ready');
+                            updateCargoStatus(doc,'Cargo mass too heavy for launch');
                         } else {
                             updateCargoStatus(doc,'Cargo mass low enough for launch');
                         }
@@ -128,7 +128,7 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel,w) {
                 console.log(w);
             }
         }
-        updateStatus(doc,"Shuttle not ready for launch");
+        updateStatus(doc,"Shuttle Not Ready for Launch");
     } else {
         updateStatus(doc,"Shuttle is Ready for Launch");
     }
