@@ -127,7 +127,7 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel) {
         updateStatus(doc,"Shuttle not ready for launch");
     } else {
         hideFaultyItems(doc);
-        updateStatus(doc,"Shuttle is Ready for launch");
+        updateStatus(doc,"Shuttle is Ready for Launch");
     }
     return valid;
 }
@@ -139,7 +139,7 @@ function updateStatus(doc,status){
             statusReport.style.color = 'rgb(65, 159, 106)';
         break;
         default:
-            statusReport.style.color = 'red';
+            statusReport.style.color = 'rgb(65, 159, 106)';
     }
 }
 function updatePilotStatus(doc,pilot,status){
