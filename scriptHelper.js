@@ -32,7 +32,7 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel) {
             case 2:
                 switch (result){
                     case ('Not a Number'):
-                        updatePilotStatus(doc,`Pilot ${arguments[a]} is ready for launch`);
+                        updatePilotStatus(doc,`Pilot ${arguments[a]}`,` is ready for launch`);
                     break;
                     case ('Is a Number'):
                         valid = false;
@@ -51,7 +51,7 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel) {
             case 3:
                 switch (result){
                     case ('Not a Number'):
-                        updateCopilotStatus(doc,`Co-pilot ${arguments[a]} is ready for launch`);
+                        updateCopilotStatus(doc,`Co-pilot ${arguments[a]}`,` is ready for launch`);
                     break;
                     case ('Is a Number'):
                         valid = false;
