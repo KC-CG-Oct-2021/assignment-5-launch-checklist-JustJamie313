@@ -1,5 +1,4 @@
-// Write your helper functions here!
-// require('isomorphic-fetch');
+require('isomorphic-fetch');
 
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
     let target = document.querySelector('#missionTarget');
@@ -34,32 +33,38 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel) {
             case 2:
                 switch (result){
                     case ('Not a Number'):
-                        updatePilotStatus(doc,`${arguments[a]}`,'Ready.');
+                        updatePilotStatus(doc,`Pilot: ${arguments[a]}`,': Ready');
                     break;
                     case ('Is a Number'):
                         valid = false;
-                        updatePilotStatus(doc,'',`Pilot Name cannot be a number. Not Ready`);
+                        msg += 'Pilot Name cannot be a number.\n'
+                        updatePilotStatus(doc,'',`Pilot Name cannot be a number: Not Ready`);
                     break;
                     case ('Empty'):
                         valid = false;
-                        msg = 'All fields are required.';
-                        updatePilotStatus(doc,`${arguments[a]}`,'Pilot Name cannot be empty. Not Ready.');
+                        if(!msg.includes('All fields are required.')){
+                            msg += 'All fields are required.\n';
+                        }
+                        updatePilotStatus(doc,`${arguments[a]}`,'Pilot Name cannot be empty: Not Ready');
                     break;
                 }
             break;
             case 3:
                 switch (result){
                     case ('Not a Number'):
-                        updateCopilotStatus(doc,`${arguments[a]}`,`Ready.`);
+                        updateCopilotStatus(doc,`Co-Pilot: ${arguments[a]}`,`: Ready`);
                     break;
                     case ('Is a Number'):
                         valid = false;
-                        updateCopilotStatus(doc,'',`Co-Pilot Name cannot be a number. Not Ready`);
+                        msg += 'Co-Pilot Name cannot be a number.\n';
+                        updateCopilotStatus(doc,'',`Co-Pilot Name cannot be a number: Not Ready`);
                     break;
                     case ('Empty'):
                         valid = false;
-                        msg = 'All fields are required.';
-                        updateCopilotStatus(doc,`${arguments[a]}`,'Co-Pilot Name cannot be empty. Not Ready.');
+                        if(!msg.includes('All fields are required.')){
+                            msg += 'All fields are required.\n';
+                        }
+                        updateCopilotStatus(doc,`${arguments[a]}`,'Co-Pilot Name cannot be empty: Not Ready');
                     break;
                 }
             break;
@@ -67,20 +72,24 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel) {
                 switch (result){
                     case ('Not a Number'):
                         valid = false;
-                        updateFuelStatus(doc,'Fuel Level must be a number. Not Ready.');
+                        msg += 'Fuel Level must be a number\n';
+                        updateFuelStatus(doc,'Fuel Level must be a number: Not Ready');
                     break;
                     case ('Is a Number'):
                         if(arguments[a]<10000){
                             valid = false;
-                            updateFuelStatus(doc,'Insufficient fuel for this journey.  Not Ready');
+                            msg += 'Insufficient fuel for this journey.\n';
+                            updateFuelStatus(doc,'Insufficient fuel for this journey:  Not Ready');
                         } else {
-                            updateFuelStatus(doc,'Fuel Ready.');
+                            updateFuelStatus(doc,'Fuel: Ready');
                         }
                     break;
                     case ('Empty'):
                         valid = false;
-                        msg = 'All fields are required.';
-                        updateFuelStatus(doc,'Fuel Level cannot be empty. Not Ready.');
+                        if(!msg.includes('All fields are required.')){
+                            msg += 'All fields are required.';
+                        }
+                        updateFuelStatus(doc,'Fuel Level cannot be empty: Not Ready');
                     break;
                 }
             break;
@@ -88,20 +97,24 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel) {
                 switch (result){
                     case ('Not a Number'):
                         valid = false;
-                        updateCargoStatus(doc,'Cargo Mass must be a number. Not Ready');
+                        msg += 'Cargo Mass must be a number.\n';
+                        updateCargoStatus(doc,'Cargo Mass must be a number: Not Ready');
                     break;
                     case ('Is a Number'):
                         if(arguments[a]>10000){
                             valid = false;
-                            updateCargoStatus(doc,'Cargo Mass exceeds shuttle capacity.  Not Ready');
+                            msg += 'Cargo Mass exceeds shuttle capacity.\n'
+                            updateCargoStatus(doc,'Cargo Mass exceeds shuttle capacity:  Not Ready');
                         } else {
-                            updateCargoStatus(doc,'Cargo Ready.');
+                            updateCargoStatus(doc,'Cargo: Ready');
                         }
                     break;
                     case ('Empty'):
                         valid = false;
-                        msg = 'All fields are required.';
-                        updateCargoStatus(doc,'Cargo Mass cannot be empty (enter 0 for no cargo). Not Ready.');
+                        if(!msg.includes('All fields are required.')){
+                            msg += 'All fields are required.';
+                        }
+                        updateCargoStatus(doc,'Cargo Mass cannot be empty (enter 0 for no cargo): Not Ready.');
                     break;
                 }
             break;
