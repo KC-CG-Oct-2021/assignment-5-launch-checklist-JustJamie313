@@ -1,18 +1,19 @@
 const { myFetch } = require("./scriptHelper.js");
 
-window.addEventListener("load", function() {
-   let listedPlanets;
-   let listedPlanetsResponse = myFetch();
-   listedPlanetsResponse.then(function (result) {
+window.addEventListener("load", function(e) {
+    let w = e.target;
+    let listedPlanets;
+    let listedPlanetsResponse = myFetch();
+    listedPlanetsResponse.then(function (result) {
        listedPlanets = result;
-   }).then(function () {
+    }).then(function () {
        let chosenPlanet = pickPlanet(listedPlanets);
        addDestinationInfo(document,chosenPlanet['name'],chosenPlanet['diameter'],chosenPlanet['star'],chosenPlanet['distance'],chosenPlanet['moons'],chosenPlanet['image']);
-   })
+    })
    
    let form = document.querySelector('form');
-   form.addEventListener('submit',function(event){
-        let w = this.window;
+   form.addEventListener('submit',function(event,w){
+        
         let doc = document;
         let list;
         let pilot = doc.querySelector('#pilotName').value;
