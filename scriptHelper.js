@@ -1,5 +1,5 @@
 require('isomorphic-fetch');
-let alert = require('alert');
+let popup = require('popups');
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
     let target = document.querySelector('#missionTarget');
     target.innerHTML = `
@@ -122,7 +122,7 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel) {
     }
     if(valid === false){
         if(msg){
-            alert(msg);
+            popup.alert(msg);
         }
         showFaultyItems(doc);
         updateStatus(doc,"Shuttle not ready for launch");
