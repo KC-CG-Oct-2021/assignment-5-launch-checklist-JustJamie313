@@ -1,4 +1,8 @@
-const { myFetch } = require("./scriptHelper.js");
+try{
+   const { myFetch } = require("./scriptHelper.js");
+} catch (error){
+   
+}
 
 window.addEventListener("load", function(e) {
     

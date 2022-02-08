@@ -1,4 +1,6 @@
-require('isomorphic-fetch');
+try{
+    require('isomorphic-fetch');
+} catch(error){}
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
     let target = document.querySelector('#missionTarget');
     target.innerHTML = `
@@ -178,9 +180,11 @@ async function myFetch() {
 function pickPlanet(planets) {
     return planets[Math.floor(Math.random()*planets.length)];
 }
+try{
+    module.exports.addDestinationInfo = addDestinationInfo;
+    module.exports.validateInput = validateInput;
+    module.exports.formSubmission = formSubmission;
+    module.exports.pickPlanet = pickPlanet; 
+    module.exports.myFetch = myFetch;
+} catch(error){}
 
-module.exports.addDestinationInfo = addDestinationInfo;
-module.exports.validateInput = validateInput;
-module.exports.formSubmission = formSubmission;
-module.exports.pickPlanet = pickPlanet; 
-module.exports.myFetch = myFetch;
