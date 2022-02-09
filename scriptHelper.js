@@ -55,7 +55,7 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel,w) {
                 if(this.launchStatus === ''){
                     this.launchStatus = 'Shuttle is Ready for Launch';
                 }
-                return `Co-Pilot ${this.copilot} is ready for launch`;
+                return `Co-pilot ${this.copilot} is ready for launch`;
             }
         },
         'fuelLevel':fuelLevel,
