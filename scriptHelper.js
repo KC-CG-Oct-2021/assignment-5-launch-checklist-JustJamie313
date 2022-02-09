@@ -26,121 +26,98 @@ function validateInput(testInput) {
    return "Empty";
 }
 function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel,w) {
-    hideFaultyItems(doc);
-    let valid = true;
-    let msg = '';
-    for(let a=2;a<arguments.length;a++){
-        let result = validateInput(arguments[a]);
-        switch (a){
-            case 2:
-                switch (result){
-                    case ('Not a Number'):
-                        updatePilotStatus(doc,`Pilot ${arguments[a]}`,`is ready for launch`);
-                    break;
-                    case ('Is a Number'):
-                        valid = false;
-                        msg += 'Pilot Name cannot be a number.\n'
-                        updatePilotStatus(doc,'',`Pilot Name cannot be a number: Not Ready`);
-                    break;
-                    case ('Empty'):
-                        valid = false;
-                        if(!msg.includes('All fields are required.')){
-                            msg += 'All fields are required.\n';
-                        }
-                        updatePilotStatus(doc,`${arguments[a]}`,'Pilot Name cannot be empty: Not Ready');
-                    break;
-                }
-            break;
-            case 3:
-                switch (result){
-                    case ('Not a Number'):
-                        updateCopilotStatus(doc,`Co-pilot ${arguments[a]}`,`is ready for launch`);
-                    break;
-                    case ('Is a Number'):
-                        valid = false;
-                        msg += 'Co-Pilot Name cannot be a number.\n';
-                        updateCopilotStatus(doc,'',`Co-Pilot Name cannot be a number: Not Ready`);
-                    break;
-                    case ('Empty'):
-                        valid = false;
-                        if(!msg.includes('All fields are required.')){
-                            msg += 'All fields are required.\n';
-                        }
-                        updateCopilotStatus(doc,`${arguments[a]}`,'Co-Pilot Name cannot be empty: Not Ready');
-                    break;
-                }
-            break;
-            case 4:
-                switch (result){
-                    case ('Not a Number'):
-                        valid = false;
-                        msg += 'Fuel Level must be a number\n';
-                        updateFuelStatus(doc,'Fuel Level must be a number: Not Ready');
-                    break;
-                    case ('Is a Number'):
-                        if(arguments[a]<10000){
-                            valid = false;
-                            msg += 'Insufficient fuel for this journey.\n';
-                            updateFuelStatus(doc,'Fuel level too low for launch');
-                        } else {
-                            updateFuelStatus(doc,'Fuel level high enough for launch');
-                        }
-                    break;
-                    case ('Empty'):
-                        valid = false;
-                        if(!msg.includes('All fields are required.')){
-                            msg += 'All fields are required.';
-                        }
-                        updateFuelStatus(doc,'Fuel Level cannot be empty: Not Ready');
-                    break;
-                }
-            break;
-            case 5:
-                switch (result){
-                    case ('Not a Number'):
-                        valid = false;
-                        msg += 'Cargo Mass must be a number.\n';
-                        updateCargoStatus(doc,'Cargo Mass must be a number: Not Ready');
-                    break;
-                    case ('Is a Number'):
-                        if(arguments[a]>10000){
-                            valid = false;
-                            msg += 'Cargo Mass exceeds shuttle capacity.\n'
-                            updateCargoStatus(doc,'Cargo mass too heavy for launch');
-                        } else {
-                            updateCargoStatus(doc,'Cargo mass low enough for launch');
-                        }
-                    break;
-                    case ('Empty'):
-                        valid = false;
-                        if(!msg.includes('All fields are required.')){
-                            msg += 'All fields are required.';
-                        }
-                        updateCargoStatus(doc,'Cargo Mass cannot be empty (enter 0 for no cargo): Not Ready.');
-                    break;
-                }
-            break;
-        }
-    }
-    if(valid === false){
-        if(msg){
-            if(w){
-                w.alert(msg);
+    hideFaultyItems(list);
+    let statusObj = {
+        'pilot':pilot,
+        'pilotStatus':function(){
+            if(validateInput(this.pilot) === "Empty"){
+                this.launchStatus = 'Shuttle Not Ready for Launch';
+                return 'Pilot Name cannot be empty. Not Ready.';
+            } else if(validateInput(this.pilot) === "Is a Number"){
+                this.launchStatus = 'Shuttle Not Ready for Launch';
+                return 'Pilot Name cannot be a number. Not Ready';
             } else {
-                console.log(w);
+                if(this.launchStatus === ''){
+                    this.launchStatus = 'Shuttle is Ready for Launch';
+                }
+                return `${this.pilot} is ready for launch`;
             }
-        }
-        updateStatus(doc,"Shuttle Not Ready for Launch");
-    } else {
-        updateStatus(doc,"Shuttle is Ready for Launch");
+        },
+        'copilot':copilot,
+        'copilotStatus':function(){
+            if(validateInput(this.copilot) === "Empty"){
+                this.launchStatus = 'Shuttle Not Ready for Launch';
+                return 'Co-Pilot Name cannot be empty. Not Ready.';
+            } else if(validateInput(this.copilot) === "Is a Number"){
+                this.launchStatus = 'Shuttle Not Ready for Launch';
+                return 'Co-Pilot Name cannot be a number. Not Ready';
+            } else {
+                if(this.launchStatus === ''){
+                    this.launchStatus = 'Shuttle is Ready for Launch';
+                }
+                return `${this.copilot} is ready for launch`;
+            }
+        },
+        'fuelLevel':fuelLevel,
+        'fuelStatus':function(){
+            if(validateInput(this.fuelLevel) === "Empty"){
+                this.launchStatus = 'Shuttle Not Ready for Launch';
+                return 'Fuel Level cannot be empty.  Not Ready.';
+            } else if(validateInput(this.fuelLevel) === "Not a Number"){
+                this.launchStatus = 'Shuttle Not Ready for Launch';
+                return 'Fuel Level must be a number.  Not Ready.';
+            } else {
+                if(this.fuelLevel<10000){
+                    this.launchStatus = 'Shuttle Not Ready for Launch';
+                    return 'Fuel level too low for launch';
+                } else {
+                    if(this.launchStatus === ''){
+                        this.launchStatus = 'Shuttle is Ready for Launch';
+                    }
+                    return 'Fuel level high enough for launch';
+                }
+            }
+        },
+        'cargoLevel':cargoLevel,
+        'cargoStatus': function(){
+            if(validateInput(this.cargoLevel) === "Empty"){
+                this.launchStatus = 'Shuttle Not Ready for Launch';
+                return 'Cargo Level cannot be empty.  Not Ready';
+            } else if(validateInput(this.cargoLevel) === "Not a Number"){
+                this.launchStatus = 'Shuttle Not Ready for Launch';
+                return 'Cargo Mass must be a number. Not Ready';
+            } else {
+                if(this.cargoLevel>10000){
+                    this.launchStatus = 'Shuttle Not Ready for Launch';
+                    return 'Cargo mass too heavy for launch';
+                } else {
+                    if(this.launchStatus === ''){
+                        this.launchStatus = 'Shuttle is Ready for Launch';
+                    }
+                    return 'Cargo mass low enough for launch';
+                }
+            }
+        },
+        'launchStatus':''
     }
-    showFaultyItems(doc);
-    return valid;
+    showStatus(doc,statusObj);
+    updateStatusColor(doc);
+    showFaultyItems(list);
+    if(statusObj.launchStatus.includes("Not")){
+        showAlert(statusObj);
+    }
+    //return valid;
 }
-function updateStatus(doc,status){
+function showStatus(doc, statusObj){
+    doc.querySelector('#pilotStatus').innerHTML = statusObj.pilotStatus();
+    doc.querySelector('#copilotStatus').innerHTML = statusObj.copilotStatus();
+    doc.querySelector('#fuelStatus').innerHTML = statusObj.fuelStatus();
+    doc.querySelector('#cargoStatus').innerHTML = statusObj.cargoStatus();
+    doc.querySelector('#launchStatus').innerHTML = statusObj.launchStatus;
+}
+function updateStatusColor(doc){
     let statusReport = doc.querySelector('#launchStatus');
-    statusReport.innerHTML = status;
-    switch(status){
+    switch(statusReport.innerHTML){
         case ("Shuttle is Ready for Launch"):
             statusReport.style.color = 'rgb(65, 159, 106)';
         break;
@@ -148,27 +125,15 @@ function updateStatus(doc,status){
             statusReport.style.color = 'rgb(199, 37, 78)';
     }
 }
-function updatePilotStatus(doc,pilot,status){
-    let p = doc.querySelector('#pilotStatus');
-    p.innerHTML = `${pilot} ${status}`;
+function showAlert(statusObj){
+    let msg = `${statusObj.pilotStatus()}\n${statusObj.copilotStatus()}\n${statusObj.fuelStatus()}\n${statusObj.cargoStatus()}`;
+    window.alert(msg);
 }
-function updateCopilotStatus(doc,pilot,status){
-    let cp = doc.querySelector('#copilotStatus');
-    cp.innerHTML = `${pilot} ${status}`;
+function showFaultyItems(list){
+    list.style.visibility = 'visible';
 }
-function updateFuelStatus(doc,status){
-    let f = doc.querySelector('#fuelStatus');
-    f.innerHTML = status;
-}
-function updateCargoStatus(doc,status){
-    let c = doc.querySelector('#cargoStatus');
-    c.innerHTML = status;
-}
-function showFaultyItems(doc){
-    doc.querySelector('#faultyItems').style.visibility = 'visible';
-}
-function hideFaultyItems(doc){
-    doc.querySelector('#faultyItems').style.visibility = '';
+function hideFaultyItems(list){
+    list.style.visibility = '';
 }
 async function myFetch() {
     let planetsReturned = await fetch('https://handlers.education.launchcode.org/static/planets.json').then(response => response.json()).then(function(data) {

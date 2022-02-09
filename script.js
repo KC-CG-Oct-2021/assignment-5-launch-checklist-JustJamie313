@@ -20,7 +20,7 @@ window.addEventListener("load", function(e) {
         let doc = document;
         let w = doc.defaultView || doc.parentWindow;
         w.name = 'launchReport';
-        let list;
+        let list = doc.querySelector('#faultyItems');
         let pilot = doc.querySelector('#pilotName').value;
         let coPilot = doc.querySelector('input[name=copilotName]').value;
         let fuelLevel = doc.querySelector('input[name=fuelLevel]').value;
