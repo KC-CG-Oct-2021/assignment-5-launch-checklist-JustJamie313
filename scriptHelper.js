@@ -31,7 +31,46 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel,w) {
             this.id = id;
             this.value = value;
             this.validInput = validateInput(this.value);
-            this.status = createStatus(this.id,this.value,this.validInput);
+            this.status = this.createStatus();
+        }
+        createStatus(){
+            switch(this.validInput){
+                case ('Empty'):
+                    return `${this.id} cannot be empty. Not Ready`;
+                break;
+                case ('Is a Number'):
+                    switch(this.id){
+                        case 'Pilot':
+                        case 'Co-pilot':
+                            return `${this.id} cannot be a number. Not Ready`;
+                        break;
+                        case ('Fuel level'):
+                            if(this.value < 10000){
+                                return `Fuel level too low for launch`;
+                            }
+                            return `Fuel level high enough for launch`;
+                        break;
+                        case ('Cargo mass'):
+                            if(this.value > 10000){
+                                return 'Cargo mass too heavy for launch';
+                            }
+                            return `Cargo mass low enough for launch`
+                        break;
+                    }
+                break;
+                case ('Not a Number'):
+                    switch(this.id){
+                        case 'Pilot':
+                        case 'Co-pilot':
+                            return `${this.id} ${this.value} is ready for launch`;
+                        break;
+                        case 'Fuel level':
+                        case 'Cargo mass':
+                            return `${this.id} must be a number. Not Ready`
+                        break;
+                    }
+                break;
+            }
         }
     }
     
@@ -42,6 +81,9 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel,w) {
         new StatObj('Cargo mass',cargoLevel)
     ]
     let launchStat = getLaunchStatus(statusArray);
+    if(launchStat !== "Shuttle is Ready for Launch"){
+        showAlert(statusArray);
+    }
     statusArray.push(launchStat);
     showStatus(doc,statusArray);
     updateStatusColor(doc);
@@ -62,45 +104,6 @@ function getLaunchStatus(statusArray){
     }
     return returnStatus;
 }
-function createStatus(id,value,inputType){
-    switch(inputType){
-        case ('Empty'):
-            return `${id} cannot be empty. Not Ready`;
-        break;
-        case ('Is a Number'):
-            switch(id){
-                case 'Pilot':
-                case 'Co-pilot':
-                    return `${id} cannot be a number. Not Ready`;
-                break;
-                case ('Fuel level'):
-                    if(value < 10000){
-                        return `Fuel level too low for launch`;
-                    }
-                    return `Fuel level high enough for launch`;
-                break;
-                case ('Cargo mass'):
-                    if(value > 10000){
-                        return 'Cargo mass too heavy for launch';
-                    }
-                    return `Cargo mass low enough for launch`
-                break;
-            }
-        break;
-        case ('Not a Number'):
-            switch(id){
-                case 'Pilot':
-                case 'Co-pilot':
-                    return `${id} ${value} is ready for launch`;
-                break;
-                case 'Fuel level':
-                case 'Cargo mass':
-                    return `${id} must be a number. Not Ready`
-                break;
-            }
-        break;
-    }
-}
 function showStatus(doc, statusArray){
     doc.querySelector('#pilotStatus').innerHTML =statusArray[0].status;
     doc.querySelector('#copilotStatus').innerHTML = statusArray[1].status;
@@ -118,10 +121,17 @@ function updateStatusColor(doc){
             statusReport.style.color = 'rgb(199, 37, 78)';
     }
 }
-function showAlert(statusObj){
-    let msg = `${statusObj.pilotStatus()}\n${statusObj.copilotStatus()}\n${statusObj.fuelStatus()}\n${statusObj.cargoStatus()}`;
+function showAlert(statusArray){
+    let msg = '';
+    for(let a=0;a<statusArray.length;a++){
+       if(statusArray[a].status.includes('Not')||statusArray[a].status.includes('too')){
+           msg += statusArray[a].status + '\n';
+       };
+    }
     try{
-        window.alert(msg);
+        if(msg){
+            window.alert(msg);
+        }
     } catch(error){}
 }
 function toggleVisibility(el){
