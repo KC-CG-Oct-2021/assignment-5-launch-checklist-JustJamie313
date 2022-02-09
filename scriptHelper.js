@@ -127,7 +127,9 @@ function updateStatusColor(doc){
 }
 function showAlert(statusObj){
     let msg = `${statusObj.pilotStatus()}\n${statusObj.copilotStatus()}\n${statusObj.fuelStatus()}\n${statusObj.cargoStatus()}`;
-    window.alert(msg);
+    try{
+        window.alert(msg);
+    } catch(error){}
 }
 function showFaultyItems(list){
     list.style.visibility = 'visible';
